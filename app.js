@@ -1,5 +1,7 @@
 import express from 'express';
 
+import session from 'express-session';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import hashers from 'node-django-hashers';
@@ -10,6 +12,14 @@ const jsonParser = bodyParser.json();
 const h = new hashers.PBKDF2PasswordHasher(); // eslint-disable-line no-unused-vars
 
 const app = express();
+
+// Session config
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false
+}));
 
 // db url
 const mongoDB = process.env.MONGOLAB_URI || 'mongodb://levongambaryan:newflower1@ds137435.mlab.com:37435/alcousersdb';
@@ -40,11 +50,7 @@ console.log(User);
 
 // CORS
 if (config.CORS_ENABLED) {
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
+  app.use(cors());
 }
 
 // API
