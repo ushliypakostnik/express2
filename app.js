@@ -4,6 +4,10 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
+import User from './models/user';
+import passport from './config/passport';
+import router from './routes/index';
+
 import config from './config/config';
 
 const app = express();
@@ -13,7 +17,7 @@ app.use(session({
   secret: '2C44-4D44-WppQ38S',
   cookie: { maxAge: 60000 },
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false
 }));
 
 // db url
@@ -32,5 +36,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 if (config.CORS_ENABLED) {
   app.use(cors());
 }
+
+app.use(router);
 
 export default app;

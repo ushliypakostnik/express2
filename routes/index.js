@@ -8,7 +8,7 @@ const router = Router();
 router.use('/api', api);
 
 // Test route
-router.get('/api', (req, res) => {
+router.get('/test', (req, res) => {
   res.send(200);
 });
 
