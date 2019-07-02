@@ -1,5 +1,5 @@
-Samovarov.pro backend project
-=============================
+Backend project
+===============
 
 Deploy
 ------
