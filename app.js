@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import config from './config';
+import config from './config/config';
 import User from './models/user';
 import passport from './config/passport';
 import router from './routes/index';

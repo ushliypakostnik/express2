@@ -1,6 +1,6 @@
 import app from './app';
 
-import config from './config';
+import config from './config/config';
 
 // Server
 app.listen(config.PORT, () => {
