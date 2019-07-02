@@ -16,7 +16,6 @@
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
-    "fs": "0.0.1-security",
     "mongoose": "^5.6.2",
     "node-django-hashers": "^1.1.6",
     "nodemon": "^1.19.0"
