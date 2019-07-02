@@ -28,8 +28,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  usermail: { type: String },
+  username: { type: String, unique: true },
+  usermail: { type: String, required: true },
   password: { type: String, required: true },
   userinfo: { type: Object },
 });
@@ -69,7 +69,8 @@ app.put('/api/user', jsonParser, (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
+// Test route
+app.get('/api', (req, res) => {
   res.send(200);
 });
 
