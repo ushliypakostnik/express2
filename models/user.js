@@ -32,20 +32,17 @@ UserSchema.methods.generateJWT = () => {
 
   return jwt.sign({
     email: this.usermail,
-    id: this._id,
+    id: this.id,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
   }, 'secret');
 };
 
-UserSchema.methods.toAuthJSON = () => {
-  return {
-    _id: this._id,
-    usermail: this.usermail,
-    token: this.generateJWT(),
-  };
-};
+UserSchema.methods.toAuthJSON = () => ({
+  id: this.id,
+  usermail: this.usermail,
+  token: this.generateJWT(),
+});
 
 const User = mongoose.model('User', UserSchema);
 
 export default User;
-
