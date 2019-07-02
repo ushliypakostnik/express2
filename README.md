@@ -1,7 +1,7 @@
 Backend project
 ===============
 
-Express with MongoDB from Mlab.
+Express with MongoDB from mLab.
 
 
 Deploy
