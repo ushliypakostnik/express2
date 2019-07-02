@@ -55,7 +55,6 @@ app.get('/api/user', (req, res) => {
 
   User.findOne({ username: userName }, (err, user) => {
     if (err) return res.status(400).send();
-
     return res.send(user);
   });
 });
