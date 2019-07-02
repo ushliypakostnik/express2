@@ -4,8 +4,8 @@ import session from 'express-session';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import User from './models/user';
-import passport from './config/passport';
+import User from './models/user'; // eslint-disable-line no-unused-vars
+import passport from './config/passport'; // eslint-disable-line no-unused-vars
 import router from './routes/index';
 
 import config from './config/config';
@@ -17,7 +17,7 @@ app.use(session({
   secret: '2C44-4D44-WppQ38S',
   cookie: { maxAge: 60000 },
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 
 // db url
