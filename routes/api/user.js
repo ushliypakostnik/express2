@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+
 import passport from '../../config/passport';
 import auth from '../auth';
 
 const router = Router();
+const jsonParser = bodyParser.json();
 const User = mongoose.model('User');
 
 // POST new user route (optional, everyone has access)
@@ -35,7 +38,7 @@ router.post('/', auth.optional, (req, res) => {
 });
 
 // POST login route (optional, everyone has access)
-router.post('/login', auth.optional, (req, res, next) => {
+router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   const { body: { user } } = req;
 
   if (!user.email) {
@@ -53,7 +56,7 @@ router.post('/login', auth.optional, (req, res, next) => {
       },
     });
   }
-
+/*
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if (err) {
       return next(err);
@@ -68,6 +71,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 
     return info.status(400);
   })(req, res, next);
+*/
 });
 
 // GET current route (required, only authenticated users have access)
