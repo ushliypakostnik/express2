@@ -9,34 +9,6 @@ const router = Router();
 const jsonParser = bodyParser.json();
 const User = mongoose.model('User');
 
-// POST new user route (optional, everyone has access)
-router.post('/', auth.optional, (req, res) => {
-  const { body: { user } } = req;
-
-  if (!user.usermail) {
-    return res.status(422).json({
-      errors: {
-        email: 'is required',
-      },
-    });
-  }
-
-  if (!user.password) {
-    return res.status(422).json({
-      errors: {
-        password: 'is required',
-      },
-    });
-  }
-
-  const finalUser = new User(user);
-
-  finalUser.setPassword(user.password);
-
-  return finalUser.save()
-    .then(() => res.json({ user: finalUser.toAuthJSON() }));
-});
-
 // POST login route (optional, everyone has access)
 router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   const { body: { user } } = req;
@@ -70,7 +42,12 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       return res.json({ user: passportUser.toAuthJSON() });
     }
 
-    return res.sendStatus(400);
+    const finalUser = new User(user);
+
+    finalUser.setPassword(user.password);
+
+    return finalUser.save()
+      .then(() => res.json({ user: finalUser.toAuthJSON() }));
   })(req, res, next);
 });
 
