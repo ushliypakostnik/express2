@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import api from './api/index';
+import passport from '../config/passport'; // eslint-disable-line no-unused-vars
 
 const router = Router();
 

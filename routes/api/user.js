@@ -13,7 +13,7 @@ const User = mongoose.model('User');
 router.post('/', auth.optional, (req, res) => {
   const { body: { user } } = req;
 
-  if (!user.email) {
+  if (!user.usermail) {
     return res.status(422).json({
       errors: {
         email: 'is required',
@@ -41,7 +41,9 @@ router.post('/', auth.optional, (req, res) => {
 router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   const { body: { user } } = req;
 
-  if (!user.email) {
+  console.log('req.user: ', user);
+
+  if (!user.usermail) {
     return res.status(422).json({
       errors: {
         email: 'is required',
@@ -56,22 +58,20 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       },
     });
   }
-/*
+
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+    console.log(err, passportUser, info);
+
     if (err) {
       return next(err);
     }
 
     if (passportUser) {
-      const u = passportUser;
-      user.token = passportUser.generateJWT();
-
-      return res.json({ user: u.toAuthJSON() });
+      return res.json({ user: passportUser.toAuthJSON() });
     }
 
-    return info.status(400);
+    return res.sendStatus(400);
   })(req, res, next);
-*/
 });
 
 // GET current route (required, only authenticated users have access)

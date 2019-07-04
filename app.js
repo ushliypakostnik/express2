@@ -37,6 +37,9 @@ if (config.CORS_ENABLED) {
   app.use(cors());
 }
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(router);
 
 export default app;
