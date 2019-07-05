@@ -9,7 +9,6 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   usermail: { type: String, required: true, unique: true },
   username: { type: String, unique: true },
-  password: { type: String, required: true },
   hash: { type: String },
   salt: { type: String },
   userinfo: { type: Object },
@@ -29,8 +28,6 @@ UserSchema.methods.generateJWT = function () { // eslint-disable-line func-names
   const today = new Date();
   const expirationDate = new Date(today);
   expirationDate.setDate(today.getDate() + 60);
-
-  console.log(this);
 
   return jwt.sign({
     id: this.id,
