@@ -14,14 +14,14 @@ const app = express();
 
 // Session config
 app.use(session({
-  secret: '2C44-4D44-WppQ38S',
+  secret: config.SECRET,
   cookie: { maxAge: 60000 },
   resave: false,
   saveUninitialized: false,
 }));
 
 // db url
-const mongoDB = process.env.MONGOLAB_URI || 'mongodb://levongambaryan:newflower1@ds137435.mlab.com:37435/alcousersdb';
+const mongoDB = process.env.MONGOLAB_URI || 'mongodb://levongambaryan:testbase1@ds347467.mlab.com:47467/test01';
 
 // db connect
 mongoose.connect(mongoDB, {

@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
+import config from '../config/config';
+
 // Model
 
 const { Schema } = mongoose;
@@ -17,6 +19,7 @@ const UserSchema = new Schema({
 UserSchema.methods.setPassword = function (password) { // eslint-disable-line func-names
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
 };
 
 UserSchema.methods.validatePassword = function (password) { // eslint-disable-line func-names
@@ -33,7 +36,7 @@ UserSchema.methods.generateJWT = function () { // eslint-disable-line func-names
     id: this.id,
     usermail: this.usermail,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
-  }, 'secret');
+  }, config.SECRET);
 };
 
 UserSchema.methods.toAuthJSON = function () { // eslint-disable-line func-names

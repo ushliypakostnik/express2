@@ -8,6 +8,7 @@ const development = {
   MEDIA_URL: process.env.MEDIA_URL || 'http://127.0.0.1:8082/media',
   STATIC_SERVE: false,
   CORS_ENABLED: true,
+  SECRET: 'secret',
 };
 
 const production = {
@@ -16,6 +17,7 @@ const production = {
   MEDIA_URL: process.env.MEDIA_URL || 'http://www.yourserver.com/media',
   STATIC_SERVE: false,
   CORS_ENABLED: false,
+  SECRET: 'secret',
 };
 
 const config = {

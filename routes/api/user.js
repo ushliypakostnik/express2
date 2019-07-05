@@ -13,8 +13,6 @@ const User = mongoose.model('User');
 router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   const { body: { user } } = req;
 
-  console.log('req.user: ', user);
-
   if (!user.usermail) {
     return res.status(422).json({
       errors: {
@@ -31,9 +29,8 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
     });
   }
 
+  // eslint-disable-next-line no-unused-vars
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-    console.log(err, passportUser, info);
-
     if (err) {
       return next(err);
     }
@@ -47,12 +44,22 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
     finalUser.setPassword(user.password);
 
     return finalUser.save()
-      .then(() => res.json({ user: finalUser.toAuthJSON() }));
+      .then(() => {
+        res.json({ user: finalUser.toAuthJSON() });
+      })
+      .catch(() => {
+        res.sendStatus(400);
+      });
   })(req, res, next);
 });
 
+router.get('/logout', auth.required, (req, res) => {
+  req.session.destroy();
+  res.send('logout success!');
+});
+
 // GET current route (required, only authenticated users have access)
-router.get('/current', auth.required, (req, res) => {
+router.get('/account', auth.required, (req, res) => {
   const { payload: { id } } = req;
 
   return User.findById(id)
