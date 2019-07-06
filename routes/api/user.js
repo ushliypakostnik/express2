@@ -2,8 +2,9 @@ import { Router } from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
-import passport from '../../config/passport';
 import auth from '../auth';
+import passport from '../../config/passport';
+import { sendVerifyEmail } from '../../config/mailer';
 
 const router = Router();
 const jsonParser = bodyParser.json();
@@ -31,21 +32,25 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
 
   // eslint-disable-next-line no-unused-vars
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-    if (err) {
-      return next(err);
-    }
+    if (err) return next(err);
 
+    // Если есть такой пользователь
     if (passportUser) {
       return res.json({ user: passportUser.toAuthJSON() });
     }
 
+    // Если нет - регистрируем нового
     const finalUser = new User(user);
 
     finalUser.setPassword(user.password);
 
     return finalUser.save()
-      .then(() => {
-        res.json({ user: finalUser.toAuthJSON() });
+      .then((responce) => {
+        // console.log("Отправляем письмо для верификации нового аккаунта!");
+        const { usermail } = responce;
+        const userid = responce._id; // eslint-disable-line no-underscore-dangle
+        sendVerifyEmail(usermail, userid);
+        res.json({ user: responce.toAuthJSON() });
       })
       .catch(() => {
         res.sendStatus(400);
@@ -53,23 +58,23 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   })(req, res, next);
 });
 
+// GET Send verification email
+router.get('/send-verify-email', auth.required, jsonParser, (req, res) => {
+  const { user: { usermail } } = req;
+  User.findOne({ usermail }, (err, user) => {
+    if (err) return res.status(400).send();
+
+    // console.log("Отправляем письмо для верификации аккаунта!");
+    const userid = user._id; // eslint-disable-line no-underscore-dangle
+    sendVerifyEmail(usermail, userid);
+    return res.sendStatus(200);
+  });
+});
+
+// GET Logout
 router.get('/logout', auth.required, (req, res) => {
   req.session.destroy();
   res.send('logout success!');
-});
-
-// GET current route (required, only authenticated users have access)
-router.get('/account', auth.required, (req, res) => {
-  const { payload: { id } } = req;
-
-  return User.findById(id)
-    .then((user) => {
-      if (!user) {
-        return res.sendStatus(400);
-      }
-
-      return res.json({ user: user.toAuthJSON() });
-    });
 });
 
 export default router;

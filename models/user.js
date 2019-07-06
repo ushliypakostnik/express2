@@ -4,30 +4,33 @@ import crypto from 'crypto';
 
 import config from '../config/config';
 
-// Model
+// User Model
 
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   usermail: { type: String, required: true, unique: true },
-  username: { type: String, unique: true },
+  username: { type: String },
   hash: { type: String },
   salt: { type: String },
   userinfo: { type: Object },
 });
 
-UserSchema.methods.setPassword = function (password) { // eslint-disable-line func-names
+// eslint-disable-next-line func-names
+UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
   this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
 };
 
-UserSchema.methods.validatePassword = function (password) { // eslint-disable-line func-names
+// eslint-disable-next-line func-names
+UserSchema.methods.validatePassword = function (password) {
   const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
-UserSchema.methods.generateJWT = function () { // eslint-disable-line func-names
+// eslint-disable-next-line func-names
+UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const expirationDate = new Date(today);
   expirationDate.setDate(today.getDate() + 60);
@@ -39,7 +42,8 @@ UserSchema.methods.generateJWT = function () { // eslint-disable-line func-names
   }, config.SECRET);
 };
 
-UserSchema.methods.toAuthJSON = function () { // eslint-disable-line func-names
+// eslint-disable-next-line func-names
+UserSchema.methods.toAuthJSON = function () {
   return {
     id: this.id,
     usermail: this.usermail,

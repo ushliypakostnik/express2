@@ -10,7 +10,7 @@ router.use('/api', api);
 
 // Test route
 router.get('/test', (req, res) => {
-  res.send(200);
+  res.sendStatus(200);
 });
 
 // Others

@@ -1,14 +1,14 @@
 import express from 'express';
-
 import session from 'express-session';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import url from 'url';
+
+import config from './config/config';
 
 import User from './models/user'; // eslint-disable-line no-unused-vars
 import passport from './config/passport'; // eslint-disable-line no-unused-vars
 import router from './routes/index';
-
-import config from './config/config';
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(session({
 }));
 
 // db url
-const mongoDB = process.env.MONGOLAB_URI || 'mongodb://levongambaryan:testbase1@ds347467.mlab.com:47467/test01';
+const mongoDB = process.env.MONGOLAB_URI || `mongodb://${config.PASS.DB.user}:${config.PASS.DB.pass}${config.PASS.DB.base}`;
 
 // db connect
 mongoose.connect(mongoDB, {
@@ -35,6 +35,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // CORS
 if (config.CORS_ENABLED) {
   app.use(cors());
+}
+
+// Static
+if (config.STATIC_SERVE) {
+  const mediaURL = new url.URL(config.MEDIA_URL);
+  app.use(mediaURL.pathname, express.static(config.MEDIA_DIR));
 }
 
 app.use(passport.initialize());

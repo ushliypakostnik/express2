@@ -1,5 +1,7 @@
 node_modules
 
+pass.js
+
 .env
 .sass-cache
 npm-debug.log
