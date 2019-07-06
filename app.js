@@ -21,7 +21,7 @@ app.use(session({
 }));
 
 // db url
-const mongoDB = process.env.MONGOLAB_URI || `mongodb://${config.PASS.DB.user}:${config.PASS.DB.pass}${config.PASS.DB.base}`;
+const mongoDB = process.env.MONGOLAB_URI || config.PASS.DB.url;
 
 // db connect
 mongoose.connect(mongoDB, {

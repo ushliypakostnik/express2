@@ -13,14 +13,14 @@ const UserSchema = new Schema({
   username: { type: String },
   hash: { type: String },
   salt: { type: String },
-  userinfo: { type: Object },
+  userinfo: { type: Object, default: [] },
 });
 
 // eslint-disable-next-line func-names
 UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-  this.username = [this.usermail.split('@')];
+  this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
 };
 
 // eslint-disable-next-line func-names

@@ -41,18 +41,18 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
 
     // Если нет - регистрируем нового
     const finalUser = new User(user);
-
     finalUser.setPassword(user.password);
 
     return finalUser.save()
-      .then((responce) => {
+      .then((response) => {
         // console.log("Отправляем письмо для верификации нового аккаунта!");
-        const { usermail } = responce;
-        const userid = responce._id; // eslint-disable-line no-underscore-dangle
+        const { usermail } = response;
+        const userid = response._id; // eslint-disable-line no-underscore-dangle
         sendVerifyEmail(usermail, userid);
-        res.json({ user: responce.toAuthJSON() });
+        res.json({ user: response.toAuthJSON() });
       })
       .catch(() => {
+        // console.log("Не удалось сохранить новый аккаунт!");
         res.sendStatus(400);
       });
   })(req, res, next);
@@ -65,8 +65,9 @@ router.get('/send-verify-email', auth.required, jsonParser, (req, res) => {
     if (err) return res.status(400).send();
 
     // console.log("Отправляем письмо для верификации аккаунта!");
+    console.log(usermail, user.usermail);
     const userid = user._id; // eslint-disable-line no-underscore-dangle
-    sendVerifyEmail(usermail, userid);
+    sendVerifyEmail(user.usermail, userid);
     return res.sendStatus(200);
   });
 });
