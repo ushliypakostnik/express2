@@ -65,9 +65,8 @@ router.get('/send-verify-email', auth.required, jsonParser, (req, res) => {
     if (err) return res.status(400).send();
 
     // console.log("Отправляем письмо для верификации аккаунта!");
-    console.log(usermail, user.usermail);
     const userid = user._id; // eslint-disable-line no-underscore-dangle
-    sendVerifyEmail(user.usermail, userid);
+    sendVerifyEmail(usermail, userid);
     return res.sendStatus(200);
   });
 });
