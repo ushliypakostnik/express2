@@ -21,8 +21,22 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
     if (err) return next(err);
 
     // Если пользователь есть в базе
+    // Валидный пароль для этого email
     if (passportUser) {
       return res.json({ user: passportUser.toAuthJSON() });
+    }
+
+    // Не валидный пароль для этого email
+    if (!passportUser && info) {
+      const { usermail } = user;
+      User.findOne({ usermail }, (err, user) => {
+        if (err) return res.sendStatus(400);
+
+        // console.log("Отправляем данные профиля для аккаунта!", user);
+        res.status(422).json({
+          errors: { message: 'Email password pair incorrect' },
+        });
+      });
     }
 
     // Если пользователя нет в базе - регистрируем нового
@@ -33,12 +47,12 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       .then((response) => {
         const { usermail } = response;
         const userrand = response.verify.rand; // eslint-disable-line no-underscore-dangle
-        // console.log("Отправляем письмо для верификации нового аккаунта!", usermail, userid);
+        // console.log("Отправляем письмо для верификации нового аккаунта!", usermail, userrand);
         sendVerifyEmail(usermail, userrand);
         res.json({ user: response.toAuthJSON() });
       })
       .catch((error) => {
-        console.log("Не удалось сохранить новый аккаунт!", error.errmsg);
+        // console.log("Не удалось сохранить новый аккаунт!", error.errmsg);
         res.status(400).json({
           errors: { message: 'Authentication / Registration failed' },
         });
