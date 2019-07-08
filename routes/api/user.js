@@ -32,7 +32,6 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       User.findOne({ usermail }, (err, user) => {
         if (err) return res.sendStatus(400);
 
-        // console.log("Отправляем данные профиля для аккаунта!", user);
         res.status(422).json({
           errors: { message: 'Email password pair incorrect' },
         });
