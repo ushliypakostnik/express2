@@ -22,6 +22,8 @@
   }
 
   a {
+    color: #98395b;
+    white-space: nowrap;
     text-decoration: underline;
   }
   a:hover {
@@ -43,10 +45,12 @@
   }
 
   .content {
+    color: #0a1216;
     background: #ffffff;
   }
 
   .header {
+    color: #0a1216;
     letter-spacing: 1.5px;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -57,6 +61,7 @@
   }
 
   .text {
+    color: #0a1216;
     font-size: 16px;
     line-height: 24px;
     letter-spacing: normal;
@@ -75,7 +80,7 @@
     margin-top: 10px;
     margin-bottom: 30px;
     background: #8b688f;
-    color: #182933;
+    color: #ffffff;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 3px;
@@ -88,6 +93,9 @@
   }
   .button:hover {
     text-decoration: none;
+  }
+  a.button {
+    color: #ffffff !important;
   }
 
   .footer {
@@ -104,11 +112,10 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-  .footer a {
+  .footer p a {
     text-decoration: underline;
-    color: #98395b;
   }
-  .footer a:hover {
+  .footer p a:hover {
     text-decoration: none;
   }
 </style>
@@ -118,45 +125,52 @@
 <body style="background-color:#f9f9f9;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;width:600px;max-width:600px;height:auto;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;font-size:100%;font-family:'Helvetica', 'Arial', sans-serif;" >
 {% block content %}
 <table border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;height:auto;" >
-  <!--<tr class="header" style="letter-spacing:1.5px;margin-top:20px;margin-bottom:10px;font-size:24px;font-weight:bold;padding-left:20px;padding-right:20px;" >
+  <!--<tr class="header" style="color:#0a1216;letter-spacing:1.5px;margin-top:20px;margin-bottom:10px;font-size:24px;font-weight:bold;padding-left:20px;padding-right:20px;" >
     <th align="left" valign="top">
       {% block image %}
       <img border="0" id="back" width="100%" src="http://levon.devprod.ru/images/alcoemailheader.jpg" style="width:100%;max-width:100%;height:auto;" />
       {% endblock %}
     </th>
   </tr>-->
-  <tr class="content" style="background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
+  <tr class="content" style="color:#0a1216;background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
     <td align="center" valign="top">
-      <p class="header" style="letter-spacing:1.5px;margin-top:20px;margin-bottom:10px;font-size:24px;font-weight:bold;padding-left:20px;padding-right:20px;" >
+      <p class="header" style="color:#0a1216;letter-spacing:1.5px;margin-top:20px;margin-bottom:10px;font-size:24px;font-weight:bold;padding-left:20px;padding-right:20px;" >
       {% block header %}
-      Basic email template
+      Verify email template
       {% endblock %}
       </p>
     </td>
   </tr>
-  <tr class="content" style="background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
+  <tr class="content" style="color:#0a1216;background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
     <td align="center" valign="top">
-      <p class="text" style="font-size:16px;line-height:24px;letter-spacing:normal;padding-left:20px;padding-right:20px;margin-top:5px;" >
+      <p class="text" style="color:#0a1216;font-size:16px;line-height:24px;letter-spacing:normal;padding-left:20px;padding-right:20px;margin-top:5px;" >
       {% block text %}
-      Lorem Ipsum is simply dummy text of the printing and <a href="#" style="text-decoration:underline;" >typesetting industry</a>. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
+      Lorem Ipsum is simply dummy text of the printing and <a href="#" style="color:#98395b;white-space:nowrap;text-decoration:underline;" >typesetting industry</a>. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
       {% endblock %}
       </p>
     </td>
   </tr>
-  <tr class="content" style="background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
+  <tr class="content" style="color:#0a1216;background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
     <td align="center" valign="top">
-      <a class="button" href="#" style="display:inline-block;width:300px;height:16px;line-height:16px;padding-top:20px;padding-bottom:20px;margin-top:10px;margin-bottom:30px;background-color:#8b688f;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;color:#182933;text-transform:uppercase;font-weight:bold;letter-spacing:3px;text-decoration:none;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;font-size:18px;" >
       {% block button %}
-      Перейти к сервису
+      <a class="button" href="#" style="white-space:nowrap;display:inline-block;width:300px;height:16px;line-height:16px;padding-top:20px;padding-bottom:20px;margin-top:10px;margin-bottom:30px;background-color:#8b688f;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;text-transform:uppercase;font-weight:bold;letter-spacing:3px;text-decoration:none;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;font-size:18px;color:#ffffff !important;" >Перейти к сервису</a>
       {% endblock %}
-      </a>
+    </td>
+  </tr>
+  <tr class="content" style="color:#0a1216;background-color:#ffffff;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;" >
+    <td align="center" valign="top">
+      <p class="text" style="color:#0a1216;font-size:16px;line-height:24px;letter-spacing:normal;padding-left:20px;padding-right:20px;margin-top:5px;" >
+      {% block link %}
+      Если вы не видите кнопку выше нажмите на ссылку: <a href="#" style="color:#98395b;white-space:nowrap;text-decoration:underline;" >Верифицировать акаунт</a>
+      {% endblock %}
+      </p>
     </td>
   </tr>
   <tr class="footer" style="height:auto;background-color:#0a1216;background-image:none;background-repeat:repeat;background-position:top left;background-attachment:scroll;color:#828e9c;" >
     <td align="center" valign="top">
       <p style="font-size:11px;line-height:13px;margin-top:30px;margin-bottom:30px;letter-spacing:normal;padding-left:20px;padding-right:20px;" >
       {% block footer %}
-      Если Вы не желаете больше получать подобную информацию или считаете, что настоящее<br />письмо было отправлено Вам ошибочно - сообщите нам по ссылке <a href="#" style="text-decoration:underline;color:#98395b;" >Отписаться от рассылки.</a>
+      Если Вы не желаете больше получать подобную информацию или считаете, что настоящее<br />письмо было отправлено Вам ошибочно - сообщите нам по ссылке <a href="#" style="color:#98395b;white-space:nowrap;text-decoration:underline;" >Отписаться от рассылки.</a>
       {% endblock %}
       </p>
     </td>

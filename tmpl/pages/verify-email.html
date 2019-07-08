@@ -1,4 +1,4 @@
-{% extends "email-template-inline.html" %}
+{% extends "template-verify-email-inline.html" %}
 
 {# This is comment #}
 {% block content %}
@@ -14,7 +14,11 @@
 {% endblock %}
 
 {% block button %}
-Перейти к сервису
+<a class="button" href="{{ verifyLink }}">Перейти к сервису</a>
+{% endblock %}
+
+{% block link %}
+Если вы не видите кнопку выше нажмите на ссылку: <a href="href={{ verifyLink }}">Верифицировать акаунт</a>
 {% endblock %}
 
 {% block footer %}

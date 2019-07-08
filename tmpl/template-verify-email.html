@@ -22,6 +22,8 @@
   }
 
   a {
+    color: #98395b;
+    white-space: nowrap;
     text-decoration: underline;
   }
   a:hover {
@@ -78,7 +80,7 @@
     margin-top: 10px;
     margin-bottom: 30px;
     background: #8b688f;
-    color: #182933;
+    color: #ffffff;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 3px;
@@ -91,6 +93,9 @@
   }
   .button:hover {
     text-decoration: none;
+  }
+  a.button {
+    color: #ffffff !important;
   }
 
   .footer {
@@ -107,11 +112,10 @@
     padding-left: 20px;
     padding-right: 20px;
   }
-  .footer a {
+  .footer p a {
     text-decoration: underline;
-    color: #98395b;
   }
-  .footer a:hover {
+  .footer p a:hover {
     text-decoration: none;
   }
 </style>
@@ -132,7 +136,7 @@
     <td align="center" valign="top">
       <p class="header">
       {% block header %}
-      Basic email template
+      Verify email template
       {% endblock %}
       </p>
     </td>
@@ -148,11 +152,18 @@
   </tr>
   <tr class="content">
     <td align="center" valign="top">
-      <a class="button" href="#">
       {% block button %}
-      Перейти к сервису
+      <a class="button" href="#">Перейти к сервису</a>
       {% endblock %}
-      </a>
+    </td>
+  </tr>
+  <tr class="content">
+    <td align="center" valign="top">
+      <p class="text">
+      {% block link %}
+      Если вы не видите кнопку выше нажмите на ссылку: <a href="#">Верифицировать акаунт</a>
+      {% endblock %}
+      </p>
     </td>
   </tr>
   <tr class="footer">

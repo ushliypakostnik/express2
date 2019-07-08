@@ -29,7 +29,7 @@ export const sendVerifyEmail = (email, id) => {
   app.mailer.send('pages/verify-email.html', {
     to: email,
     subject: 'Верификация пользователя',
-    verifyLink: id,
+    verifyLink: `${config.HOST}api/user/verify?id=${id}`,
   }, (err) => {
     if (err) {
       // console.log('Ошибка отправки письма для верификации!');
