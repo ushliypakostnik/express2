@@ -27,6 +27,7 @@ const mongoDB = process.env.MONGOLAB_URI || config.PASS.DB.url;
 mongoose.connect(mongoDB, {
   useCreateIndex: true,
   useNewUrlParser: true,
+  useFindAndModify: false,
 });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

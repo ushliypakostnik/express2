@@ -70,7 +70,7 @@ router.get('/verify', auth.optional, jsonParser, (req, res) => {
       { returnOriginal: false }, (error, verifyUser) => { // eslint-disable-line no-unused-vars
         if (error) return res.sendStatus(400);
 
-        // console.log('Пользователь верифицирован: ', user);
+        console.log('Пользователь верифицирован: ', user);
         return res.redirect(config.CLIENT_HOST);
       });
   });
