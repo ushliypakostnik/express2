@@ -25,17 +25,33 @@ mailer.extend(app, {
   },
 });
 
-export const sendVerifyEmail = (email, id) => {
+export const sendVerifyEmail = (email, rand) => {
   app.mailer.send('pages/verify-email.html', {
     to: email,
     subject: 'Верификация пользователя',
-    verifyLink: `${config.HOST}api/user/verify?id=${id}`,
+    verifyLink: `${config.HOST}api/user/verify?id=${rand}`,
   }, (err) => {
     if (err) {
       // console.log('Ошибка отправки письма для верификации!');
       console.log(err);
     } else {
       // console.log('Письмо для верификации отправлено!');
+    }
+  });
+};
+
+export const sendPasswordRemindEmail = (email, pass) => {
+  app.mailer.send('pages/remind-pass-email.html', {
+    to: email,
+    subject: 'Напоминание пароля',
+    password: pass,
+    link: `${config.CLIENT_HOST}`,
+  }, (err) => {
+    if (err) {
+      console.log('Ошибка отправки письма с напоминанием пароля!');
+      console.log(err);
+    } else {
+      console.log('Письмо с напоминанием пароля отправлено!');
     }
   });
 };

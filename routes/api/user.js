@@ -4,7 +4,10 @@ import bodyParser from 'body-parser';
 
 import auth from '../auth';
 import passport from '../../config/passport';
-import { sendVerifyEmail } from '../../config/mailer';
+import {
+  sendVerifyEmail,
+  sendPasswordRemindEmail
+} from '../../config/mailer';
 
 import config from '../../config/config';
 
@@ -32,7 +35,7 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       User.findOne({ usermail }, (err, user) => {
         if (err) return res.status(400).json({ errors: config.ERRORS.auth_400 });
 
-        res.status(422).json({ errors: config.ERRORS.auth_422 });
+        return res.status(422).json({ errors: config.ERRORS.auth_422 });
       });
     }
 
@@ -84,6 +87,23 @@ router.get('/verify', auth.optional, jsonParser, (req, res) => {
       });
   });
 });
+
+// GET Remind password
+router.post('/remind', auth.optional, jsonParser, (req, res) => {
+  const { body: { usermail: { usermail } } } = req;
+  console.log(usermail);
+  User.findOne({ usermail }, (err, user) => {
+    if (err) {
+      return res.status(422).json({ errors: config.ERRORS.remind_pass_422 });
+    }
+
+    const userrand = user.verify.rand; // eslint-disable-line no-underscore-dangle
+    console.log("Отправляем пароль для аккаунта!", user);
+    sendPasswordRemindEmail(usermail, userrand);
+    return res.sendStatus(200);
+  });
+});
+
 
 // GET User profile
 router.get('/profile', auth.required, jsonParser, (req, res) => {

@@ -37,6 +37,11 @@ UserSchema.methods.validatePassword = function (password) {
 };
 
 // eslint-disable-next-line func-names
+UserSchema.methods.encodeHash = function (hash, salt) {
+  // console.log('Get password to remind ', hash, salt);
+};
+
+// eslint-disable-next-line func-names
 UserSchema.methods.generateJWT = function () {
   // console.log('User generate JWT');
   const today = new Date();

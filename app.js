@@ -17,6 +17,7 @@ app.use(session({
   secret: config.SECRET,
   cookie: { maxAge: 60000 },
   resave: false,
+  rolling: true,
   saveUninitialized: false,
 }));
 
