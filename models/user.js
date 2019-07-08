@@ -25,7 +25,7 @@ UserSchema.methods.setNewUser = function (password) {
   // console.log('User set password ', password);
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-  this.username = this.usermail.split('@')[0] + Math.floor(Math.random() * 1000); // eslint-disable-line prefer-destructuring
+  this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
   this.verify.rand = crypto.randomBytes(16).toString('hex');
 };
 
