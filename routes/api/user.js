@@ -30,11 +30,9 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
     if (!passportUser && info) {
       const { usermail } = user;
       User.findOne({ usermail }, (err, user) => {
-        if (err) return res.sendStatus(400);
+        if (err) return res.status(400).json({ errors: config.ERRORS.auth_400 });
 
-        res.status(422).json({
-          errors: { message: 'Email password pair incorrect' },
-        });
+        res.status(422).json({ errors: config.ERRORS.auth_422 });
       });
     }
 
@@ -52,9 +50,7 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       })
       .catch((error) => {
         // console.log("Не удалось сохранить новый аккаунт!", error.errmsg);
-        res.status(400).json({
-          errors: { message: 'Authentication / Registration failed' },
-        });
+        res.status(400).json({ errors: config.ERRORS.auth_400 });
       });
   })(req, res, next);
 });

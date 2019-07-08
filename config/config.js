@@ -1,4 +1,5 @@
 import PASS from './pass';
+import ERRORS from './errors';
 
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ const development = {
   CORS_ENABLED: true,
   SECRET: 'secret',
   PASS,
+  ERRORS,
 };
 
 const production = {
@@ -26,6 +28,7 @@ const production = {
   CORS_ENABLED: false,
   SECRET: 'secret',
   PASS,
+  ERRORS,
 };
 
 const config = {
