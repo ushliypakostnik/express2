@@ -20,13 +20,12 @@ mailer.extend(app, {
   port: 465, // port for secure SMTP
   transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
   auth: {
-    user: config.PASS.MAIL.user,
-    pass: config.PASS.MAIL.pass,
+    user: config.PASS.EMAIL.user,
+    pass: config.PASS.EMAIL.pass,
   },
 });
 
 export const sendVerifyEmail = (email, rand) => {
-  console.log(email, rand);
   app.mailer.send('pages/verify-email.html', {
     to: email,
     subject: 'Верификация пользователя',
@@ -49,10 +48,10 @@ export const sendPasswordRemindEmail = (email, pass) => {
     link: `${config.CLIENT_HOST}`,
   }, (err) => {
     if (err) {
-      console.log('Ошибка отправки письма с напоминанием пароля!');
+      // console.log('Ошибка отправки письма с напоминанием пароля!');
       console.log(err);
     } else {
-      console.log('Письмо с напоминанием пароля отправлено!');
+      // console.log('Письмо с напоминанием пароля отправлено!');
     }
   });
 };

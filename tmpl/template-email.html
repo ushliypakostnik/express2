@@ -5,20 +5,19 @@
 
 <style>
 {% block style %}
-  html {
-    background: #f9f9f9;
-  }
-
   body {
     background: #f9f9f9;
+    font-size: 100%;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  }
+
+  .wrapper {
     width: 600px;
     max-width: 600px;
     height: auto;
     margin: 0;
     margin-left: auto;
     margin-right: auto;
-    font-size: 100%;
-    font-family: 'Helvetica', 'Arial', sans-serif;
   }
 
   a {
@@ -123,61 +122,63 @@
 
 </head>
 <body>
-{% block content %}
-<table border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-  <!--<tr class="header">
-    <th align="left" valign="top">
-      {% block image %}
-      <img border="0" id="back" width="100%" src="http://levon.devprod.ru/images/alcoemailheader.jpg" />
-      {% endblock %}
-    </th>
-  </tr>-->
-  <tr class="content">
-    <td align="center" valign="top">
-      <p class="header">
-      {% block header %}
-      Verify email template
-      {% endblock %}
-      </p>
-    </td>
-  </tr>
-  <tr class="content">
-    <td align="center" valign="top">
-      <p class="text">
-      {% block text %}
-      Lorem Ipsum is simply dummy text of the printing and <a href="#">typesetting industry</a>. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
-      {% endblock %}
-      {% block pass %}
-      {% endblock %}
-      </p>
-    </td>
-  </tr>
-  <tr class="content">
-    <td align="center" valign="top">
-      {% block button %}
-      <a class="button" href="#">Перейти к сервису</a>
-      {% endblock %}
-    </td>
-  </tr>
-  <tr class="content">
-    <td align="center" valign="top">
-      <p class="text">
-      {% block link %}
-      Если вы не видите кнопку выше нажмите на ссылку: <a href="#">Верифицировать акаунт</a>
-      {% endblock %}
-      </p>
-    </td>
-  </tr>
-  <tr class="footer">
-    <td align="center" valign="top">
-      <p>
-      {% block footer %}
-      Если Вы не желаете больше получать подобную информацию или считаете, что настоящее<br />письмо было отправлено Вам ошибочно - сообщите нам по ссылке <a href="#">Отписаться от рассылки.</a>
-      {% endblock %}
-      </p>
-    </td>
-  </tr>
-</table>
-{% endblock %}
+  <div class="wrapper">
+    <table border="0" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+    {% block content %}
+      <!--<tr class="header">
+        <th align="left" valign="top">
+          {% block image %}
+          <img border="0" id="back" width="100%" src="http://levon.devprod.ru/images/alcoemailheader.jpg" />
+          {% endblock %}
+        </th>
+      </tr>-->
+      <tr class="content">
+        <td align="center" valign="top">
+          <p class="header">
+          {% block header %}
+          Verify email template
+          {% endblock %}
+          </p>
+        </td>
+      </tr>
+      <tr class="content">
+        <td align="center" valign="top">
+          <p class="text">
+          {% block text %}
+          Lorem Ipsum is simply dummy text of the printing and <a href="#">typesetting industry</a>. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.
+          {% endblock %}
+          {% block pass %}
+          {% endblock %}
+          </p>
+        </td>
+      </tr>
+      <tr class="content">
+        <td align="center" valign="top">
+          {% block button %}
+          <a class="button" href="#">Перейти к сервису</a>
+          {% endblock %}
+        </td>
+      </tr>
+      <tr class="content">
+        <td align="center" valign="top">
+          <p class="text">
+          {% block link %}
+          Если вы не видите кнопку выше нажмите на ссылку: <a href="#">Верифицировать акаунт</a>
+          {% endblock %}
+          </p>
+        </td>
+      </tr>
+      <tr class="footer">
+        <td align="center" valign="top">
+          <p>
+          {% block footer %}
+          Если Вы не желаете больше получать подобную информацию или считаете, что настоящее<br />письмо было отправлено Вам ошибочно - сообщите нам по ссылке <a href="#">Отписаться от рассылки.</a>
+          {% endblock %}
+          </p>
+        </td>
+      </tr>
+    {% endblock %}
+    </table>
+  </div>
 </body>
 </html>

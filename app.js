@@ -14,7 +14,7 @@ const app = express();
 
 // Session config
 app.use(session({
-  secret: config.SECRET,
+  secret: config.PASS.SECRET,
   cookie: { maxAge: 60000 },
   resave: false,
   rolling: true,

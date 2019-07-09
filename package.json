@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon server.js --exec babel-node --presets babel-preset-env",
-    "prod": "cross-env NODE_ENV=production nodemon server.js --exec babel-node --presets babel-preset-env",
+    "start": "cross-env NODE_ENV=development nodemon server.js --exec babel-node",
+    "prod": "cross-env NODE_ENV=production nodemon server.js --exec babel-node",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=development jest --watch"
   },
@@ -30,13 +30,14 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.4.5",
-    "babel-cli": "^6.26.0",
+    "@babel/core": "^7.5.0",
+    "@babel/node": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.3",
+    "@babel/preset-env": "^7.5.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^6.0.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-babel": "^5.3.0",

@@ -86,7 +86,8 @@ router.get('/verify', auth.optional, jsonParser, (req, res) => {
         if (error) return res.sendStatus(400);
 
         console.log('Пользователь верифицирован: ', user);
-        return res.redirect(config.CLIENT_HOST);
+        const newUser = user.toAuthJSON();
+        return res.redirect(`${config.CLIENT_HOST}?key=value#token=${newUser.token}`);
       });
   });
 });

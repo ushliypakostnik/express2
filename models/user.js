@@ -10,11 +10,10 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   usermail: { type: String, required: true, unique: true },
-  username: { type: String },
-  hash: { type: String },
-  salt: { type: String },
+  username: String,
+  password: String,
   verify: {
-    rand: { type: String },
+    rand: String,
     isVerify: { type: Boolean, default: false },
   },
   userdata: { type: Object, default: [] },
@@ -23,22 +22,20 @@ const UserSchema = new Schema({
 // eslint-disable-next-line func-names
 UserSchema.methods.setNewUser = function (password) {
   // console.log('User set password ', password);
-  this.salt = crypto.randomBytes(16).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+  const salt = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
+  this.password = hash + salt;
   this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
-  this.verify.rand = crypto.randomBytes(16).toString('hex');
+  this.verify.rand = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
 };
 
 // eslint-disable-next-line func-names
 UserSchema.methods.validatePassword = function (password) {
   // console.log('User validate password ', password);
-  const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-  return this.hash === hash;
-};
-
-// eslint-disable-next-line func-names
-UserSchema.methods.encodeHash = function (hash, salt) {
-  // console.log('Get password to remind ', hash, salt);
+  const salt = this.password.slice(-1 * config.PASS.SALT_LENGTH);
+  const hash = this.password.slice(0, -1 * config.PASS.SALT_LENGTH);
+  const hashNew = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
+  return hash === hashNew;
 };
 
 // eslint-disable-next-line func-names
@@ -52,7 +49,7 @@ UserSchema.methods.generateJWT = function () {
     id: this.id,
     usermail: this.usermail,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
-  }, config.SECRET);
+  }, config.PASS.SECRET);
 };
 
 // eslint-disable-next-line func-names
