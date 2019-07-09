@@ -40,6 +40,7 @@ export const sendVerifyEmail = (email, rand) => {
   });
 };
 
+// ?key=value#token=${token}
 export const sendPasswordRemindEmail = (email, pass) => {
   app.mailer.send('pages/remind-pass-email.html', {
     to: email,

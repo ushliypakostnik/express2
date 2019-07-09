@@ -10,7 +10,7 @@ const env = process.env.NODE_ENV;
 PASS.SECRET = crypto.randomBytes(PASS.RANDOM_BYTES).toString('hex');
 let length;
 if (process.env.SECRET) {
-  length = process.env.SECRET.length;
+  length = process.env.SECRET.length; // eslint-disable-line prefer-destructuring
 } else length = null;
 
 const common = {

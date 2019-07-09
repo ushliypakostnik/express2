@@ -6,7 +6,7 @@ import auth from '../auth';
 import passport from '../../config/passport';
 import {
   sendVerifyEmail,
-  sendPasswordRemindEmail
+  sendPasswordRemindEmail,
 } from '../../config/mailer';
 
 import config from '../../config/config';
@@ -30,11 +30,11 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
 
     if (!passportUser && info) {
       const { usermail } = user;
-      User.findOne({ usermail }, (err, user) => {
-        if (err) return res.status(400).json({ errors: config.ERRORS.auth_400 });
+      User.findOne({ usermail }, (error, result) => { // eslint-disable-line consistent-return
+        if (error) return res.status(400).json({ errors: config.ERRORS.auth_400 });
 
         // Не валидный пароль для этого email
-        if (user) {
+        if (result) {
           return res.status(422).json({ errors: config.ERRORS.auth_422 });
         }
       });
@@ -52,8 +52,8 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
         sendVerifyEmail(usermail, userrand);
         res.json({ user: response.toAuthJSON() });
       })
-      .catch((error) => {
-        // console.log("Не удалось сохранить новый аккаунт!", error.errmsg);
+      .catch(() => {
+        // console.log("Не удалось сохранить новый аккаунт!");
         res.status(400).json({ errors: config.ERRORS.auth_400 });
       });
   })(req, res, next);
@@ -61,14 +61,14 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
 
 // GET Send verification email
 router.get('/send-verify-email', auth.required, jsonParser, (req, res) => {
-  //console.log(req.user);
+  // console.log(req.user);
   const { user: { usermail } } = req;
   User.findOne({ usermail }, (err, user) => {
     console.log(user.verify);
     if (err) return res.sendStatus(400);
 
     const userrand = user.verify.rand; // eslint-disable-line no-underscore-dangle
-    console.log("Отправляем письмо для верификации аккаунта!", usermail, userrand);
+    // console.log("Отправляем письмо для верификации аккаунта!", usermail, userrand);
     sendVerifyEmail(usermail, userrand);
     return res.sendStatus(200);
   });
@@ -85,9 +85,8 @@ router.get('/verify', auth.optional, jsonParser, (req, res) => {
       { returnOriginal: false }, (error, verifyUser) => { // eslint-disable-line no-unused-vars
         if (error) return res.sendStatus(400);
 
-        console.log('Пользователь верифицирован: ', user);
-        const newUser = user.toAuthJSON();
-        return res.redirect(`${config.CLIENT_HOST}?key=value#token=${newUser.token}`);
+        // console.log('Пользователь верифицирован: ', verifyUser);
+        return res.redirect(`${config.CLIENT_HOST}`);
       });
   });
 });
@@ -101,7 +100,7 @@ router.post('/remind', auth.optional, jsonParser, (req, res) => {
     }
 
     const pass = user.password; // eslint-disable-line no-underscore-dangle
-    console.log("Отправляем пароль для аккаунта!", user);
+    // console.log("Отправляем пароль для аккаунта!", user);
     sendPasswordRemindEmail(usermail, pass);
     return res.sendStatus(200);
   });
