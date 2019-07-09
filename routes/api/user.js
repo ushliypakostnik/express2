@@ -23,19 +23,20 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if (err) return next(err);
 
-    // Если пользователь есть в базе
-    // Валидный пароль для этого email
+    // Если пользователь есть в базе и пароль валидный для этого email
     if (passportUser) {
       return res.json({ user: passportUser.toAuthJSON() });
     }
 
-    // Не валидный пароль для этого email
     if (!passportUser && info) {
       const { usermail } = user;
       User.findOne({ usermail }, (err, user) => {
         if (err) return res.status(400).json({ errors: config.ERRORS.auth_400 });
 
-        return res.status(422).json({ errors: config.ERRORS.auth_422 });
+        // Не валидный пароль для этого email
+        if (user) {
+          return res.status(422).json({ errors: config.ERRORS.auth_422 });
+        }
       });
     }
 
@@ -60,12 +61,14 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
 
 // GET Send verification email
 router.get('/send-verify-email', auth.required, jsonParser, (req, res) => {
+  //console.log(req.user);
   const { user: { usermail } } = req;
   User.findOne({ usermail }, (err, user) => {
+    console.log(user.verify);
     if (err) return res.sendStatus(400);
 
-    // console.log("Отправляем письмо для верификации аккаунта!", usermail);
     const userrand = user.verify.rand; // eslint-disable-line no-underscore-dangle
+    console.log("Отправляем письмо для верификации аккаунта!", usermail, userrand);
     sendVerifyEmail(usermail, userrand);
     return res.sendStatus(200);
   });
@@ -91,15 +94,14 @@ router.get('/verify', auth.optional, jsonParser, (req, res) => {
 // GET Remind password
 router.post('/remind', auth.optional, jsonParser, (req, res) => {
   const { body: { usermail: { usermail } } } = req;
-  console.log(usermail);
   User.findOne({ usermail }, (err, user) => {
     if (err) {
       return res.status(422).json({ errors: config.ERRORS.remind_pass_422 });
     }
 
-    const userrand = user.verify.rand; // eslint-disable-line no-underscore-dangle
+    const pass = user.password; // eslint-disable-line no-underscore-dangle
     console.log("Отправляем пароль для аккаунта!", user);
-    sendPasswordRemindEmail(usermail, userrand);
+    sendPasswordRemindEmail(usermail, pass);
     return res.sendStatus(200);
   });
 });

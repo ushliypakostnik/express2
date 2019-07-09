@@ -26,6 +26,7 @@ mailer.extend(app, {
 });
 
 export const sendVerifyEmail = (email, rand) => {
+  console.log(email, rand);
   app.mailer.send('pages/verify-email.html', {
     to: email,
     subject: 'Верификация пользователя',
