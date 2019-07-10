@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
 import PASS from './pass';
-import ERRORS from './errors';
+import MESSAGES from './messages';
 
 require('dotenv').config();
 
@@ -29,7 +29,7 @@ const common = {
       pass: process.env.EMAIL_PASS || PASS.EMAIL.pass,
     },
   },
-  ERRORS,
+  MESSAGES,
 };
 
 const development = {

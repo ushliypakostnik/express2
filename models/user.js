@@ -12,10 +12,7 @@ const UserSchema = new Schema({
   usermail: { type: String, required: true, unique: true },
   username: String,
   password: String,
-  verify: {
-    rand: String,
-    isVerify: { type: Boolean, default: false },
-  },
+  isVerify: { type: Boolean, default: false },
   userdata: { type: Object, default: [] },
 });
 
@@ -26,7 +23,7 @@ UserSchema.methods.setNewUser = function (password) {
   const hash = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
   this.password = hash + salt;
   this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
-  this.verify.rand = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
+  // this.verify.rand = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
 };
 
 // eslint-disable-next-line func-names
