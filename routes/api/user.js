@@ -35,7 +35,7 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
 
         // Не валидный пароль для этого email
         if (result) {
-          return res.status(422).json({ errors: config.MESSAGES.auth_422 });
+          return res.status(422).json({ error: config.MESSAGES.auth_422 });
         }
       });
     }
@@ -54,7 +54,7 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
       })
       .catch(() => {
         // console.log("Не удалось сохранить новый аккаунт!");
-        res.status(400).json({ errors: config.MESSAGES.auth_400 });
+        res.status(400).json({ error: config.MESSAGES.auth_400 });
       });
   })(req, res, next);
 });
@@ -98,7 +98,7 @@ router.post('/remind', auth.optional, jsonParser, (req, res) => {
     }
 
     if (!user) {
-      return res.status(422).json({ errors: config.MESSAGES.remind_pass_422 });
+      return res.status(422).json({ error: config.MESSAGES.remind_pass_422 });
     }
 
     const authUser = user.toAuthJSON();
@@ -129,6 +129,3 @@ router.get('/logout', auth.required, (req, res) => {
 });
 
 export default router;
-
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMjYwNjE5MmFhYzM2MWQ2MTUyMmViYSIsInVzZXJtYWlsIjoibGV2b24uZ2FtYmFyeWFuQGdtYWlsLmNvbSIsImV4cCI6MTU2Nzk1NzAxOCwiaWF0IjoxNTYyNzczMDE4fQ.pIf89FD_Z5r5wKryLJTmmqL8BwGpUKzBeD1pmey-egs
