@@ -59,8 +59,8 @@ router.post('/login', auth.optional, jsonParser, (req, res, next) => {
   })(req, res, next);
 });
 
-// GET Send verification email
-router.get('/send-verify-email', auth.required, jsonParser, (req, res) => {
+// POST Send verification email
+router.post('/send-verify-email', auth.required, jsonParser, (req, res) => {
   const { user: { usermail } } = req;
   User.findOne({ usermail }, (err, user) => {
     if (err) return res.sendStatus(400);
@@ -88,7 +88,7 @@ router.get('/verify', auth.optional, jsonParser, (req, res) => {
   });
 });
 
-// GET Remind password
+// POST Remind password
 router.post('/remind', auth.optional, jsonParser, (req, res) => {
   const { body: { usermail } } = req;
 
@@ -110,6 +110,27 @@ router.post('/remind', auth.optional, jsonParser, (req, res) => {
   });
 });
 
+// POST Set new password
+router.post('/password', auth.optional, jsonParser, (req, res) => {
+  const { body: { user: { id, password } } } = req;
+
+  User.findOne({ _id: id }, (err, user) => {
+    if (err) {
+      return res.status(400).json({ error: config.MESSAGES.set_pass_400 });
+    }
+
+    const newPassword = user.setNewPassword(password);
+    return User.findOneAndUpdate({ _id: id },
+      { $set: { password: newPassword } },
+      { returnOriginal: false }, (error, passwordUser) => { // eslint-disable-line no-unused-vars
+        if (err) {
+          return res.status(400).json({ success: config.MESSAGES.set_pass_400 });
+        }
+
+        return res.sendStatus(200);
+      });
+  });
+});
 
 // GET User profile
 router.get('/profile', auth.required, jsonParser, (req, res) => {

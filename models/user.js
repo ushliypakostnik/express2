@@ -18,12 +18,19 @@ const UserSchema = new Schema({
 
 // eslint-disable-next-line func-names
 UserSchema.methods.setNewUser = function (password) {
-  // console.log('User set password ', password);
+  // console.log('User set new user ', password);
   const salt = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
   const hash = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
   this.password = hash + salt;
   this.username = this.usermail.split('@')[0]; // eslint-disable-line prefer-destructuring
-  // this.verify.rand = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
+};
+
+// eslint-disable-next-line func-names
+UserSchema.methods.setNewPassword = function (password) {
+  // console.log('User set new password ', password);
+  const salt = crypto.randomBytes(config.PASS.RANDOM_BYTES).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 512, 'sha512').toString('hex');
+  return hash + salt;
 };
 
 // eslint-disable-next-line func-names
@@ -67,6 +74,7 @@ UserSchema.methods.toProfileJSON = function () {
     usermail: this.usermail,
     username: this.username,
     userdata: this.userdata,
+    isVerify: this.isVerify,
   };
 };
 
