@@ -103,7 +103,7 @@ router.post('/remind', auth.optional, jsonParser, (req, res) => {
 
     const authUser = user.toAuthJSON();
     const userid = authUser.id; // eslint-disable-line no-underscore-dangle
-    const token = authUser.token; // eslint-disable-line no-underscore-dangle
+    const { token } = authUser;
     // console.log("Отправляем письмо для востановления пароля для аккаунта!", user);
     sendPasswordRemindEmail(usermail, userid, token);
     return res.status(200).json({ success: config.MESSAGES.remind_pass_200 });
