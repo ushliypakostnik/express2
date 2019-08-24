@@ -28,7 +28,7 @@ mailer.extend(app, {
 export const sendVerifyEmail = (email, id) => {
   app.mailer.send('pages/verify-email.html', {
     to: email,
-    subject: 'Верификация пользователя',
+    subject: 'Verify account',
     verifyLink: `${config.HOST}api/user/verify?id=${id}`,
   }, (err) => {
     if (err) {
@@ -44,7 +44,7 @@ export const sendVerifyEmail = (email, id) => {
 export const sendPasswordRemindEmail = (email, id, token) => {
   app.mailer.send('pages/remind-pass-email.html', {
     to: email,
-    subject: 'Напоминание пароля',
+    subject: 'Remind password',
     link: `${config.CLIENT_HOST}password/?key=value#id=${id}&token=${token}`,
   }, (err) => {
     if (err) {

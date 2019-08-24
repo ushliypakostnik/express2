@@ -98,6 +98,7 @@ router.post('/remind', auth.optional, jsonParser, (req, res) => {
     }
 
     if (!user) {
+      console.log(config.MESSAGES.remind_pass_422);
       return res.status(422).json({ error: config.MESSAGES.remind_pass_422 });
     }
 
@@ -112,7 +113,11 @@ router.post('/remind', auth.optional, jsonParser, (req, res) => {
 
 // POST Set new password
 router.post('/password', auth.optional, jsonParser, (req, res) => {
+  console.log(req.headers);
+
   const { body: { user: { id, password } } } = req;
+
+  console.log(id, password);
 
   User.findOne({ _id: id }, (err, user) => {
     if (err) {

@@ -35,7 +35,7 @@ const common = {
 const development = {
   ...common,
   HOST: process.env.HOST || 'http://127.0.0.1:8082/',
-  CLIENT_HOST: process.env.CLIENT_HOST || 'http://localhost:3000/', // for Vue 127.0.0.1:8080/
+  CLIENT_HOST: process.env.CLIENT_HOST || 'http://localhost:3000/',
   MEDIA_URL: process.env.MEDIA_URL || 'http://127.0.0.1:8082/',
   CORS_ENABLED: true,
 };
